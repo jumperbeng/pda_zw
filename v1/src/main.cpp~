@@ -20,9 +20,9 @@ int main(int argc, char** argv){
 	}
 	
 	cout<<"############################################"<<endl;
-	cout<<"The std_out of our program starts from here."<<endl;
 	cout<<"############################################"<<endl;
-	
+	cout<<"############################################"<<endl;
+	cout<<"The std_out of our program starts from here."<<endl;
 	cout<<"Your files are read successfully!"<<endl;
 	cout<<macro_list.size()<<" macros are loaded."<<endl;
 	cout<<component_list.size()<<" components are loaded."<<endl;

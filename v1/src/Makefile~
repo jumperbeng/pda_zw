@@ -58,7 +58,7 @@ $(OBJDIR)/%.o: %.cpp
 	$(CXX) $(CXXFLAGS) -c -o $@ $< $(INCLUDE) 
 
 # Link executable
-jumper_read: $(OBJDIR)/main.o $(OBJDIR)/data_structure.o 
+jumper_read: $(OBJDIR)/main.o $(OBJDIR)/data_structure.o $(LIMBO_ROOT_DIR)/lib/libdefparseradapt.a $(LIMBO_ROOT_DIR)/lib/liblefparseradapt.a
 	$(CXX) $(CXXFLAGS) -o $@ $(OBJDIR)/main.o $(OBJDIR)/data_structure.o -I $(LIMBO_ROOT_DIR)/include -L $(LIMBO_ROOT_DIR)/lib -llefparseradapt -L$(LIMBO_ROOT_DIR)/lib -ldefparseradapt
 
 
