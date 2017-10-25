@@ -6,6 +6,7 @@
 
 class Macro;
 class Component;
+class SiteMap;
 
 using namespace std;
 
@@ -30,27 +31,69 @@ class LefDataBase : public LefParser::LefDataBase{
 		virtual void lef_macro_cbk(LefParser::lefiMacro const& v){
 			Macro new_macro(v.sizeX(), v.sizeY());
 			macro_list.insert( pair<string, Macro>(v.name(),new_macro) );
+			current_macro_name=v.name();
 		}
 
 		virtual void lef_prop_cbk(LefParser::lefiProp const& v){}
 		virtual void lef_maxstackvia_cbk(LefParser::lefiMaxStackVia const& v){}
 		virtual void lef_obstruction_cbk(LefParser::lefiObstruction const& v){}
-		virtual void lef_pin_cbk(lefiPin const& v){}
+		virtual void lef_pin_cbk(lefiPin const& v){
+			bool is_vss=false;
+			bool is_vdd=false;
+			if(strcmp(v.name(),"vss")==0)
+				is_vss=true;
+
+			if(strcmp(v.name(),"vdd")==0)
+				is_vdd=true;
+	
+			if((is_vss) or (is_vdd)){
+				lefiGeometries  *g=v.port(0);
+				lefiGeomRect *rect;	
+			    	for (int i = 0; i < g->numItems(); i++) {
+					if(g->itemType(i)==lefiGeomRectE){
+						rect = g->getRect(i);
+						if (!(rect->colorMask)) {
+							//cout<<"Rect "<<rect->xl<<", "<<rect->yl<<", "<<rect->xh<<", "<<rect->yh<<endl;
+							if (is_vss)								
+								macro_list[current_macro_name].set_bottom_vss(rect->yl);
+							else if (is_vdd)
+								macro_list[current_macro_name].set_bottom_vdd(rect->yl);
+						}
+					}
+				}
+				macro_list[current_macro_name].set_bottom();
+			}
+		}
+	private:
+		string current_macro_name;
 };
 
 class DefDataBase : public DefParser::DefDataBase{
 	public:
-		DefDataBase(){}
+		DefDataBase(){
+			component_id=0;		
+		}
 		virtual void set_def_dividerchar(string const& token){}
 		virtual void set_def_busbitchars(string const& token){}
 		virtual void set_def_version(string const& token){}
 		virtual void set_def_design(string const& token){}
 		virtual void set_def_unit(int token){}
 		virtual void set_def_diearea(int t1, int t2, int t3, int t4){}
-		virtual void add_def_row(DefParser::Row const&){}
+		virtual void add_def_row(DefParser::Row const& r){
+			if(site_map.get_num_row()==0){
+				site_map.set_num_col(r.repeat[0]);		
+				site_map.set_col_w(r.step[0]);
+			}
+			site_map.inc_num_row();
+			if(site_map.get_num_row()==2){
+				site_map.set_row_h(r.origin[1]);			
+			}
+		}
 
 		virtual void add_def_component(DefParser::Component const& c){
-			Component new_component(c);
+			Component new_component(c, component_id);
+			component_id++;
+			
 			component_list.push_back(new_component);
 		}
 
@@ -59,9 +102,11 @@ class DefDataBase : public DefParser::DefDataBase{
 		virtual void resize_def_pin(int token){}
 		virtual void add_def_net(DefParser::Net const& n){}
 		virtual void resize_def_net(int token){}
-        virtual void resize_def_blockage(int n){}
-        virtual void add_def_placement_blockage(std::vector<std::vector<int> > const& vBbox){}
-        virtual void end_def_design(){}
+		virtual void resize_def_blockage(int n){}
+		virtual void add_def_placement_blockage(std::vector<std::vector<int> > const& vBbox){}
+		virtual void end_def_design(){}
+	private:
+		int component_id;
 };
 
 #endif

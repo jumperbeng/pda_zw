@@ -1,6 +1,7 @@
 #ifndef GLOBAL_H
 #define GLOBAL_H
 
+#include <cstring>
 #include <fstream>
 #include <iostream>
 #include <list>
@@ -16,8 +17,35 @@ using namespace std;
 
 class Macro;
 class Component;
+class SiteMap;
 
 extern map<string, Macro> macro_list;
 extern list<Component> component_list;
+extern SiteMap site_map;
+
+enum Direction{N, S, W, E, FN, FS, FW, FE};
+
+//int encode_Direction(string dir){
+//	if(dir.compare("N")==0)
+//		return N;
+//	else if(dir.compare("S")==0)
+//		return S;
+//	else if(dir.compare("W")==0)
+//		return W;
+//	else if(dir.compare("E")==0)
+//		return E;
+//	else if(dir.compare("FN")==0)
+//		return FN;
+//	else if(dir.compare("FS")==0)
+//		return FS;
+//	else if(dir.compare("FW")==0)
+//		return FW;
+//	else if(dir.compare("FE")==0)
+//		return FE;
+//	else{
+//		cout<<"The direction "<<dir<<" is not recognized."<<endl;
+//		return -1;
+//	}
+//}
 
 #endif
