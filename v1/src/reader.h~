@@ -87,11 +87,11 @@ class DefDataBase : public DefParser::DefDataBase{
 		virtual void add_def_row(DefParser::Row const& r){
 			if(site_map.get_num_row()==0){
 				site_map.set_num_col(r.repeat[0]);		
-				site_map.set_col_w(r.step[0]);
+				site_map.set_col_w(r.step[0]/1000.0);
 			}
 			site_map.inc_num_row();
 			if(site_map.get_num_row()==2){
-				site_map.set_row_h(r.origin[1]);			
+				site_map.set_row_h(r.origin[1]/1000.0);			
 			}
 		}
 

@@ -1,0 +1,6 @@
+1. Implement the flip() under component class
+   probably we should not use string to represent the orientation, like'N'...
+   I have tried to use enum in the global.h (in the comment), but there are some bugs there, you can try to fix it
+2. Check the align function written by me
+   I write it in hurry, so there may be corner cases I forget. 
+3. Implement the Integer Linear Program algorithm we have discussed

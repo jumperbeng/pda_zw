@@ -9,12 +9,9 @@ class Macro{
 	public:
 		//Constructors
 		Macro();
-		Macro(double w_value, double h_value);
+		Macro(double w_value, double h_value, bool bottom_value);
 
 		//Set Functions
-		bool set_bottom();
-		bool set_bottom_vss(double v);
-		bool set_bottom_vdd(double v);
 
 		//Get Functions
 		double get_w();
@@ -25,8 +22,6 @@ class Macro{
 		double w;
 		double h;
 		bool bottom; //false(by default) is vss, true is vdd
-		double bottom_vss;
-		double bottom_vdd;
 };
 
 class Component{
@@ -43,28 +38,35 @@ class Component{
 		//Get Functions
 		string get_cell_name();
 		string get_macro_name();
+		int get_initial_x();
+		int get_initial_y();
 		int get_x();
 		int get_y();
+		int get_cost();
 		string get_status();
 		string get_orient();
 		double get_w();
 		double get_h();
+		bool get_bottom();
 
 		//Util Functions
-		void place_component();
+		void flip();
+		void place_component();		
+		void align_component();
 			
 	private:
-		int index;
-		string cell_name;
-		string macro_name;
+		int index;		
 		int initial_x;
 		int initial_y;
 		int x;
 		int y;
+		string cell_name;
+		string macro_name;
 		string status;
 		string orient;
 		double w;
 		double h;	
+		bool bottom; //false(by default) is vss, true is vdd
 };
 
 class SiteMap{
@@ -84,15 +86,20 @@ class SiteMap{
 		int get_num_col();
 		int get_row_h();
 		int get_col_w();
-		
+		int get_total_h();
+		int get_total_w();
 
 		//Util Functions
-		vector< vector< vector<int> > > site;  //dim0: row(y index); dim1: col(x index); dim2: resident
-	private:
+		void initialize();
 		
+		vector< vector< vector<int> > > site;  //dim0: row(y index); dim1: col(x index); dim2: resident
+
+	private:		
 		int num_row;
 		int num_col;
 		int row_h;
 		int col_w;
+		int total_h;
+		int total_w;
 };
 #endif

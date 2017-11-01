@@ -11,7 +11,7 @@ class Component;
 class SiteMap;
 
 map<string, Macro> macro_list;
-list<Component> component_list;
+vector<Component> component_list;
 SiteMap site_map;
 
 #endif

@@ -1,0 +1,2 @@
+${LIMBO_LIB_PATH}/limbo/preprocessor/PrintMsg.h 
+comment all instructions in limboPrint, add "return 0;"

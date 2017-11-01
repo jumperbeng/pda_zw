@@ -1,0 +1,26 @@
+#include <iostream>
+#include <map>
+#include <utility>
+
+using namespace std;
+
+class Macro{
+	public:
+		Macro(){w=0;h=0;}
+		Macro(double w_value, double h_value){w=w_value;h=h_value;}
+		double get_w(){return w;}
+		double get_h(){return h;}
+
+	private:
+		double w;
+		double h;
+};
+
+int main(){
+	map<string, Macro> macro_list;
+	Macro new_macro(3,6);
+	macro_list.insert( pair<string, Macro>("test",new_macro) );
+	cout<<macro_list.size()<<endl;
+	cout<<macro_list["test"].get_w()<<" "<<macro_list["test"].get_h()<<endl;
+	return 0;
+}

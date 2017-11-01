@@ -19,9 +19,9 @@ DBG = 0
 include $(LIMBO_ROOT_DIR)/Include.mk
 
 ifeq ($(DBG), 1)
-	CXXFLAGS = $(CXXFLAGS_DEBUG) -DDEBUG_DEFPARSER -DDEBUG_LEFPARSER
+	CXXFLAGS = $(CXXFLAGS_DEBUG) -DDEBUG_DEFPARSER -DDEBUG_LEFPARSER #-Wl,--no-as-needed -std=c++11 -pthread
 else
-	CXXFLAGS = $(CXXFLAGS_RELEASE)
+	CXXFLAGS = $(CXXFLAGS_RELEASE) #-Wl,--no-as-needed -std=c++11 -pthread
 endif
 
 #==========================================================================

@@ -6,7 +6,6 @@
 #include <iostream>
 #include <vector>
 #include <map>
-#include <stdlib.h>
 #include <string>
 
 #include <limbo/parsers/def/adapt/DefDriver.h>

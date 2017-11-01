@@ -19,9 +19,9 @@ DBG = 0
 include $(LIMBO_ROOT_DIR)/Include.mk
 
 ifeq ($(DBG), 1)
-	CXXFLAGS = $(CXXFLAGS_DEBUG) -DDEBUG_DEFPARSER -DDEBUG_LEFPARSER
+	CXXFLAGS = $(CXXFLAGS_DEBUG) -DDEBUG_DEFPARSER -DDEBUG_LEFPARSER #-Wl,--no-as-needed -std=c++11 -pthread
 else
-	CXXFLAGS = $(CXXFLAGS_RELEASE)
+	CXXFLAGS = $(CXXFLAGS_RELEASE) -Wl,--no-as-needed #-std=c++11 -pthread
 endif
 
 #==========================================================================
@@ -58,7 +58,7 @@ $(OBJDIR)/%.o: %.cpp
 	$(CXX) $(CXXFLAGS) -c -o $@ $< $(INCLUDE) 
 
 # Link executable
-jumper_read: $(OBJDIR)/main.o $(OBJDIR)/data_structure.o $(LIMBO_ROOT_DIR)/lib/libdefparseradapt.a $(LIMBO_ROOT_DIR)/lib/liblefparseradapt.a
+jumper_read: $(OBJDIR)/main.o $(OBJDIR)/data_structure.o 
 	$(CXX) $(CXXFLAGS) -o $@ $(OBJDIR)/main.o $(OBJDIR)/data_structure.o -I $(LIMBO_ROOT_DIR)/include -L $(LIMBO_ROOT_DIR)/lib -llefparseradapt -L$(LIMBO_ROOT_DIR)/lib -ldefparseradapt
 
 

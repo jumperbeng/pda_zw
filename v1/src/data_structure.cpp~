@@ -175,10 +175,8 @@ void Component::align_component(){
 			}			
 		}
 	}else{
-		if(bottom==(row_index%2)){
-			y=row_index*site_map.get_row_h();
-		}else{
-			y=(row_index+1)*site_map.get_row_h();
+		if(bottom!=(row_index%2)){
+			y=
 		}
 	}
 }
